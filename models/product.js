@@ -1,0 +1,30 @@
+const mongoose = require('mongoose')
+const { Schema } = mongoose
+
+const productSchema = new Schema({
+  name: {
+    type: String,
+    required: true,
+  },
+  price: {
+    type: Number, 
+    required: true,
+    min: 0
+  },
+  category: {
+    type: String, 
+    lowercase: true,
+    enum: ['fruit', 'vegetable', 'dairy']
+  },
+  // setup 2 way referencing
+  farm: {
+    type: Schema.Types.ObjectId,
+    // reference farm model
+    ref: 'Farm'
+  }
+})
+
+const Product = mongoose.model('Product', productSchema)
+
+//module is special object included in each JS file in node
+module.exports = Product
